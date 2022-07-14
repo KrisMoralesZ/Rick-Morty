@@ -10,8 +10,11 @@ const Characters = () => {
     return (
         <div className="characters">
             {characters.map(character =>(
+                
                 <h2>{character.name}</h2>
-            ))
+            )
+
+            )
             }
         </div>
     );
