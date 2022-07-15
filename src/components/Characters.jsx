@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useReducer, useMemo, useRef } from 'react'
-import { Card } from 'react-bootstrap';
+import React, { useEffect, useState, useReducer, useMemo, useRef, useCallback } from 'react'
+import Search from './Search';
 
 const initialState = {
   favorites: []
@@ -33,9 +33,9 @@ const Characters = () => {
     dispatch({ type: 'ADD_TO_FAVORITE', payload: favorite })
   }
 
-  const handleSearch = () => {
-    setSearch(searchInput.current.value)
-  }
+  const handleSearch = useCallback(() =>{
+    setSearch(searchInput.current.value);
+  },[])
 
   const filteredUsers = useMemo(() =>
     characters.filter((user) => {
@@ -46,14 +46,14 @@ const Characters = () => {
 
   return (
     <div className="characters">
-      {favorites.favorites.map(favorite => (
-        <li key={favorite.id}>
-          {favorite.name}
-        </li>
-      ))}
-      <div className="Search">
-        <input type="text" value={search} ref={searchInput} onChange={handleSearch} />
-      </div>
+      {
+        favorites.favorites.map(favorite => (
+          <li key={favorite.id}>
+            {favorite.name}
+          </li>
+        ))
+      }
+      <Search search={search} searchInput={searchInput} handleSearch={handleSearch} />
       {
         filteredUsers.map(character => (
           <div className="item" key={character.id}>
